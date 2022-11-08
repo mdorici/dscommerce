@@ -1,6 +1,9 @@
 package com.mdorici.dscommerce.entities;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,6 +37,9 @@ public class Order {
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
+	
 	public Order() {
 	}
 
@@ -83,5 +90,12 @@ public class Order {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
+
+	public Set<OrderItem> getItems() {
+		return items;
+	}
 	
+	public List<Product> getProducts() {
+		return items.stream().map(x -> x.getProduct()).toList();
+		}
 }
