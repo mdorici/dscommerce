@@ -1,13 +1,26 @@
 package com.mdorici.dscommerce.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 import com.mdorici.dscommerce.entities.Product;
 
 public class ProductDTO {
 
 	private Long id;
+	
+	@Size(min = 3, max = 80, message = "O nome precisa ter de 3 a 80 caracteres.")
+	@NotBlank(message = "Campo obrigatório!")
 	private String name;
-	private String description;	
+	
+	@Size(min = 10, message = "A descrição precisa ter no mínimo 1 caracteres")
+	@NotBlank(message = "Campo obrigatório!")
+	private String description;
+	
+	@Positive(message = "O preço deve ser positivo.")
 	private Double price;	
+	
 	private String imgUrl;
 	
 	public ProductDTO(Long id, String name, String description, Double price, String imgUrl) {
